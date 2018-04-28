@@ -2,10 +2,10 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ProgressBarComponent } from './progress-bar.component';
 import { AppComponent } from '../app.component';
 
-describe('ProgressBarComponent', () => {
-  let component: ProgressBarComponent;
-  let fixture: ComponentFixture<ProgressBarComponent>;
+let component: ProgressBarComponent;
+let fixture: ComponentFixture<ProgressBarComponent>;
 
+describe('ProgressBarComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [AppComponent, ProgressBarComponent],
@@ -37,17 +37,19 @@ describe('ProgressBarComponent', () => {
         component.ngOnInit();
         component.Value = RandomValue;
         fixture.detectChanges();
-        expect(fixture.nativeElement.querySelector('.progressBar__value').innerText).toEqual(component._Value + '%');
+        expect(
+          fixture.nativeElement.querySelector('.progressBar__value').innerText,
+        ).toEqual(component._Value + '%');
       }
     });
 
-    it('Value should be 0 when value is null', () => {
+    it('Value should be 0 when value is set to null', () => {
       component.Value = null;
       console.log(component.Value);
       expect(component._Value).toBe(0);
     });
 
-    it('Value should be 0 when value is undefined',() => {
+    it('Value should be 0 when value is set to undefined', () => {
       component.Value = undefined;
       expect(component._Value).toBe(0);
     });
@@ -68,6 +70,27 @@ describe('ProgressBarComponent', () => {
         component.Value = RandomValue;
         expect(component._ProgressWidth).toBeLessThanOrEqual(100);
       }
+    });
+  });
+  describe('Color Tests', () => {
+    beforeEach(() => {
+      fixture = TestBed.createComponent(ProgressBarComponent);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
+    });
+    it('should have standard color green when no other color is set or default zones are in use', () => {
+      component.Value = 9;
+      expect(component._CurrentColor).toBe('green');
+    });
+    it('should have the new color green when a new color is set', () => {
+      component._Value = 52;
+      component.Color = 'aqua';
+      expect(component._CurrentColor).toBe('aqua');
+    });
+    it('color should be yellow when value is set to 55 and default zones are in use', () => {
+      component.UseZones = true;
+      component.Value = 55;
+      expect(component._CurrentColor).toBe('yellow');
     });
   });
 });

@@ -27,8 +27,11 @@ export class ProgressBarComponent implements OnInit {
     }
   }
   @Input() MaxValue = 100;
-  @Input() UseZones = true;
-
+  @Input() UseZones = false;
+  @Input()
+  set Color(Color: string) {
+    this._CurrentColor = Color;
+  }
   ngOnInit() {
     if (this.MaxValue !== 100) {
       this._StandardMaxValue = false;
@@ -37,8 +40,10 @@ export class ProgressBarComponent implements OnInit {
 
   onValueChange(Value) {
     this._Value = Value;
-    this.setColor(Value);
     this.setProgressBarWidth(Value);
+    if (this.UseZones) {
+      this.setColor(Value);
+    }
   }
 
   setProgressBarWidth(Value) {
@@ -50,14 +55,12 @@ export class ProgressBarComponent implements OnInit {
   }
 
   setColor(Value) {
-    if (this.UseZones) {
-      if (Value >= 0 && Value <= this._Zones[0].zone) {
-        this._CurrentColor = this._Zones[0].color;
-      } else if (Value > this._Zones[0].zone && Value <= this._Zones[1].zone) {
-        this._CurrentColor = this._Zones[1].color;
-      } else {
-        this._CurrentColor = this._Zones[2].color;
-      }
+    if (Value >= 0 && Value <= this._Zones[0].zone) {
+      this._CurrentColor = this._Zones[0].color;
+    } else if (Value > this._Zones[0].zone && Value <= this._Zones[1].zone) {
+      this._CurrentColor = this._Zones[1].color;
+    } else {
+      this._CurrentColor = this._Zones[2].color;
     }
   }
 }
