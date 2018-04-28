@@ -82,15 +82,24 @@ describe('ProgressBarComponent', () => {
       component.Value = 9;
       expect(component._CurrentColor).toBe('green');
     });
-    it('should have the new color green when a new color is set', () => {
+    it('should have the new color aqua when a new color is set', () => {
       component._Value = 52;
       component.Color = 'aqua';
       expect(component._CurrentColor).toBe('aqua');
     });
-    it('color should be yellow when value is set to 55 and default zones are in use', () => {
-      component.UseZones = true;
-      component.Value = 55;
+    it('color should be yellow when value is set to 40 and default zones are in use', () => {
+      component.UseDefaultZones = true;
+      component.Value = 40;
       expect(component._CurrentColor).toBe('yellow');
     });
+  });
+
+  describe('Zone Tests', () => {
+    beforeEach(() => {
+      fixture = TestBed.createComponent(ProgressBarComponent);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
+    });
+
   });
 });
