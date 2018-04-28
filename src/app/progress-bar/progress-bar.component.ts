@@ -20,7 +20,11 @@ export class ProgressBarComponent implements OnInit {
 
   @Input()
   set Value(Value: number) {
-    this.onValueChange(Value);
+    if (Value === null || typeof Value === 'undefined') {
+      this.onValueChange(0);
+    } else {
+      this.onValueChange(Value);
+    }
   }
   @Input() MaxValue = 100;
   @Input() UseZones = true;
@@ -39,7 +43,7 @@ export class ProgressBarComponent implements OnInit {
 
   setProgressBarWidth(Value) {
     if (!this._StandardMaxValue) {
-      this._ProgressWidth = (Value / this.MaxValue) * 100;
+      this._ProgressWidth = Value / this.MaxValue * 100;
     } else {
       this._ProgressWidth = Value;
     }
