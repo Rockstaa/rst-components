@@ -125,15 +125,22 @@ describe('ProgressBarComponent', () => {
       component = fixture.componentInstance;
       fixture.detectChanges();
     });
+    it('Custom Zones shouldnt be used when the CustomZones are set to null or undefined', () => {
+      const CustomZones = null;
+      component.UseCustomZones = true;
+      component.CustomZones = CustomZones;
+      component.ngOnInit();
+      expect(component.UseCustomZones).toBe(false);
+    });
     it('_ZonesInUse should use the CustomZones when CustomZones are set', () => {
-      const Customzones = [
+      const CustomZones = [
         { value: 50, color: 'green' },
         { value: 100, color: 'red' },
       ];
       component.UseCustomZones = true;
-      component.CustomZones = Customzones;
+      component.CustomZones = CustomZones;
       component.ngOnInit();
-      expect(component._ZonesInUse).toEqual(Customzones);
+      expect(component._ZonesInUse).toEqual(CustomZones);
     });
     it('_ZonesInUse should use the DefaultZones when UseDefaultZones is set to true', () => {
       const DefaultZones = [
