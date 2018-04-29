@@ -88,13 +88,17 @@ export class ProgressBarComponent implements OnInit {
   }
 
   generateCustomZones(CustomZones: RST_PBar_Zone[]) {
-    if (CustomZones[CustomZones.length - 1].value !== this.MaxValue) {
-      CustomZones[CustomZones.length - 1].value = this.MaxValue;
-      console.warn(
-        'RST-COMPONENTS-PROGRESS-BAR: Your last configured Zone is not equal to the MaxValue, ' +
-          'we changed the value to MaxLevel, please adjust your Zones',
-      );
+    if (CustomZones !== null && typeof CustomZones !== 'undefined') {
+      if (CustomZones[CustomZones.length - 1].value !== this.MaxValue) {
+        CustomZones[CustomZones.length - 1].value = this.MaxValue;
+        console.warn(
+          'RST-COMPONENTS-PROGRESS-BAR: Your last configured Zone is not equal to the MaxValue, ' +
+            'we changed the value to MaxLevel, please adjust your Zones',
+        );
+      }
+      this._ZonesInUse = CustomZones;
+    } else {
+      this.UseCustomZones = false;
     }
-    this._ZonesInUse = CustomZones;
   }
 }
