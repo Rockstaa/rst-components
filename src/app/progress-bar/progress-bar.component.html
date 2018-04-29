@@ -1,5 +1,7 @@
-<div class="progressBar">
-  <div class="progressBar__progress" [style.background]="_CurrentColor" [style.width]="_ProgressWidth+'%'"></div>
-  <span class="progressBar__value">{{_Value}}%</span>
+<div class="rst-progressBar">
+  <div class="rst-progressBar__progress" role="progressbar" [attr.name]="Name"
+       [attr.aria-valuenow]="_ProgressWidth" [attr.ariavaluemin]="0" [attr.ariavaluemax]="MaxValue"
+       [style.background]="_CurrentColor" [style.width]="_ProgressWidth+'%'"></div>
+  <span class="rst-progressBar__value">{{_Value}}%</span>
 </div>
 

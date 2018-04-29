@@ -1,29 +1,27 @@
-.progressBar {
+.rst-progressBar {
   width: 100%;
   height:20px;
-  border: 1px solid #d5d5d5;
   position: relative;
   text-align: center;
-  border-radius: 8px;
+  border-radius: 3px;
+  background-color: #e6e9ed;
 }
 
-.progressBar__progress{
+.rst-progressBar__progress{
+  position:absolute;
   height:100%;
   left:0;
-  background: green;
-  display: inline-block;
-  position:absolute;
-  border-radius: 6px;
-  -webkit-transition : width 1s ease;
-  -moz-transition : width 1s ease;
-  -o-transition : width 1s ease;
-  transition : width 1s ease;
+  border-radius: 3px;
+  -webkit-transition : width 0.75s ease;
+  -moz-transition : width 0.75s ease;
+  -o-transition : width 0.75s ease;
+  transition : width 0.75s ease;
 }
 
-.progressBar__value {
-  display:inline-block;
+.rst-progressBar__value {
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
   position: relative;
-  font-size:18px;
+  font-size:14px;
 }
 
 
