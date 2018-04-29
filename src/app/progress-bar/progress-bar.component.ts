@@ -37,7 +37,6 @@ export class ProgressBarComponent implements OnInit {
       this._StandardMaxValue = false;
     }
     if (this.UseCustomZones) {
-      console.log(this.CustomZones);
       this.generateCustomZones(this.CustomZones);
     } else {
       this.generateStandardZones();
