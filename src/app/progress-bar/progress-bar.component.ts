@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { RST_PBar_Zone } from './interface_progress-bar';
 
 @Component({
   selector: 'app-progress-bar',
@@ -10,11 +11,8 @@ export class ProgressBarComponent implements OnInit {
   _StandardMaxValue = true;
   _ProgressWidth = 0;
   _CurrentColor = 'green';
-  _Zones = [
-    { zone: 33, color: 'green' },
-    { zone: 66, color: 'yellow' },
-    { zone: 100, color: 'red' },
-  ];
+  _Zones: RST_PBar_Zone[];
+  _ZonesInUse: RST_PBar_Zone[];
 
   constructor() {}
 
@@ -27,7 +25,9 @@ export class ProgressBarComponent implements OnInit {
     }
   }
   @Input() MaxValue = 100;
-  @Input() UseZones = false;
+  @Input() UseDefaultZones = false;
+  @Input() UseCustomZones = false;
+  @Input() CustomZones;
   @Input()
   set Color(Color: string) {
     this._CurrentColor = Color;
@@ -36,12 +36,17 @@ export class ProgressBarComponent implements OnInit {
     if (this.MaxValue !== 100) {
       this._StandardMaxValue = false;
     }
+    if (this.UseCustomZones) {
+      this.generateCustomZones(this.CustomZones);
+    } else {
+      this.generateStandardZones();
+    }
   }
 
   onValueChange(Value) {
     this._Value = Value;
     this.setProgressBarWidth(Value);
-    if (this.UseZones) {
+    if (this.UseCustomZones || this.UseDefaultZones) {
       this.setColor(Value);
     }
   }
@@ -55,12 +60,45 @@ export class ProgressBarComponent implements OnInit {
   }
 
   setColor(Value) {
-    if (Value >= 0 && Value <= this._Zones[0].zone) {
-      this._CurrentColor = this._Zones[0].color;
-    } else if (Value > this._Zones[0].zone && Value <= this._Zones[1].zone) {
-      this._CurrentColor = this._Zones[1].color;
+    this._ZonesInUse.forEach((zone, ind) => {
+      if (ind === 0) {
+        if (Value >= 0 && Value <= zone.value) {
+          this._CurrentColor = zone.color;
+          return;
+        }
+      } else {
+        if (
+          Value > this._ZonesInUse[ind - 1].value &&
+          Value <= this._ZonesInUse[ind].value
+        ) {
+          this._CurrentColor = zone.color;
+          return;
+        }
+      }
+    });
+  }
+
+  generateStandardZones() {
+    this._Zones = [
+      { value: 33, color: 'green' },
+      { value: 66, color: 'yellow' },
+      { value: this.MaxValue, color: 'red' },
+    ];
+    this._ZonesInUse = this._Zones;
+  }
+
+  generateCustomZones(CustomZones: RST_PBar_Zone[]) {
+    if (CustomZones !== null && typeof CustomZones !== 'undefined') {
+      if (CustomZones[CustomZones.length - 1].value !== this.MaxValue) {
+        CustomZones[CustomZones.length - 1].value = this.MaxValue;
+        console.warn(
+          'RST-COMPONENTS-PROGRESS-BAR: Your last configured Zone is not equal to the MaxValue, ' +
+            'we changed the value to MaxLevel, please adjust your Zones',
+        );
+      }
+      this._ZonesInUse = CustomZones;
     } else {
-      this._CurrentColor = this._Zones[2].color;
+      this.UseCustomZones = false;
     }
   }
 }
