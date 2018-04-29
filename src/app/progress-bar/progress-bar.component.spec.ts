@@ -38,7 +38,7 @@ describe('ProgressBarComponent', () => {
         component.Value = RandomValue;
         fixture.detectChanges();
         expect(
-          fixture.nativeElement.querySelector('.progressBar__value').innerText,
+          fixture.nativeElement.querySelector('.rst-progressBar__value').innerText,
         ).toEqual(component._Value + '%');
       }
     });

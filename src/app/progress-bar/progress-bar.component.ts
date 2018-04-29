@@ -16,6 +16,7 @@ export class ProgressBarComponent implements OnInit {
 
   constructor() {}
 
+  @Input() Name = 'rst-progressbar';
   @Input()
   set Value(Value: number) {
     if (Value === null || typeof Value === 'undefined') {
