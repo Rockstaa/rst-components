@@ -1,4 +1,5 @@
-export interface RST_PBar_Zone {
-  value: number;
-  color: string;
+export interface RSTPBarZone {
+  ProgressValue: number;
+  ProgressColor: string;
+  ProgressFontColor: string;
 }

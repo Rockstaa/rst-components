@@ -38,7 +38,8 @@ describe('ProgressBarComponent', () => {
         component.Value = RandomValue;
         fixture.detectChanges();
         expect(
-          fixture.nativeElement.querySelector('.rst-progressBar__value').innerText,
+          fixture.nativeElement.querySelector('.rst-progressBar__value')
+            .innerText,
         ).toEqual(component._Value + '%');
       }
     });
@@ -54,11 +55,38 @@ describe('ProgressBarComponent', () => {
       expect(component._Value).toBe(0);
     });
 
-    it('should set _StandardMaxValue to false when Value is higher than 100', () => {
+    it('Value should be 0 when value is NaN', () => {
+      component.Value = NaN;
+      expect(component._Value).toBe(0);
+    });
+
+    it('should set _StandardMaxValue to false when MaxValue is higher than 100', () => {
       component.MaxValue = 200;
       component.ngOnInit();
       component.Value = 200;
       expect(component._StandardMaxValue).toBeFalsy();
+    });
+
+    it('should set _StandardMaxValue to false when MaxValue is less 100', () => {
+      component.MaxValue = 90;
+      component.ngOnInit();
+      component.Value = 85;
+      expect(component._StandardMaxValue).toBeFalsy();
+    });
+
+    it('should set _StandardMaxValue to true when MaxValue is 100', () => {
+      component.MaxValue = 100;
+      component.ngOnInit();
+      component.Value = 90;
+      expect(component._StandardMaxValue).toBeTruthy();
+    });
+
+    it('should throw error when _StandardMaxValue is 0', () => {
+      component.MaxValue = 0;
+      component.Value = 90;
+      expect(() => {
+        component.ngOnInit();
+      }).toThrow(new Error('Your Maxlevel is 0 and causes Divison 0 ERROR'));
     });
 
     it('should have the defined width of  < 100%  when _StandardMaxValue is set to false', () => {
@@ -80,28 +108,78 @@ describe('ProgressBarComponent', () => {
     });
     it('should have standard color green when no other color is set or default, custom zones are in use', () => {
       component.Value = 9;
-      expect(component._CurrentColor).toBe('green');
+      expect(component._CurrentProgressBarColor).toBe('lightblue');
     });
     it('should have the new color aqua when a new color is set', () => {
       component._Value = 52;
-      component.Color = 'aqua';
-      expect(component._CurrentColor).toBe('aqua');
+      component.ProgressBarColor = 'aqua';
+      expect(component._CurrentProgressBarColor).toBe('aqua');
     });
     it('color should be yellow when value is set to 40 and default zones are in use', () => {
       component.UseDefaultZones = true;
       component.Value = 40;
-      expect(component._CurrentColor).toBe('yellow');
+      expect(component._CurrentProgressBarColor).toBe('yellow');
     });
     it('color should be blue when custom zone on position 0 is used and value is 35', () => {
       const Customzones = [
-        { value: 50, color: 'blue' },
-        { value: 100, color: 'red' },
+        {
+          ProgressValue: 35,
+          ProgressColor: 'blue',
+          ProgressFontColor: 'white',
+        },
+        {
+          ProgressValue: 66,
+          ProgressColor: 'yellow',
+          ProgressFontColor: 'white',
+        },
+        {
+          ProgressValue: component.MaxValue,
+          ProgressColor: 'red',
+          ProgressFontColor: 'white',
+        },
       ];
       component.UseCustomZones = true;
       component.CustomZones = Customzones;
       component.ngOnInit();
       component.Value = 35;
-      expect(component._CurrentColor).toBe('blue');
+      expect(component._CurrentProgressBarColor).toBe('blue');
+    });
+
+    it('FontColor should be white when no zones are used', () => {
+      component.Value = 40;
+      expect(component._CurrentProgressBarFontColor).toBe('white');
+    });
+
+    it('FontColor should be black when defaultzones are used and value is 27', () => {
+      component.UseDefaultZones = true;
+      component.ngOnInit();
+      component.Value = 27;
+      expect(component._CurrentProgressBarFontColor).toBe('black');
+    });
+
+    it('FontColor should be white when custom zone on position 0 is used and value is 35', () => {
+      const Customzones = [
+        {
+          ProgressValue: 35,
+          ProgressColor: 'blue',
+          ProgressFontColor: 'white',
+        },
+        {
+          ProgressValue: 66,
+          ProgressColor: 'yellow',
+          ProgressFontColor: 'white',
+        },
+        {
+          ProgressValue: component.MaxValue,
+          ProgressColor: 'red',
+          ProgressFontColor: 'white',
+        },
+      ];
+      component.UseCustomZones = true;
+      component.CustomZones = Customzones;
+      component.ngOnInit();
+      component.Value = 35;
+      expect(component._CurrentProgressBarFontColor).toBe('white');
     });
     it('setColor method shouldnt called when there are no zones in use', () => {
       const spySetColor = spyOn(component, 'setColor');
@@ -134,8 +212,21 @@ describe('ProgressBarComponent', () => {
     });
     it('_ZonesInUse should use the CustomZones when CustomZones are set', () => {
       const CustomZones = [
-        { value: 50, color: 'green' },
-        { value: 100, color: 'red' },
+        {
+          ProgressValue: 33,
+          ProgressColor: 'green',
+          ProgressFontColor: 'white',
+        },
+        {
+          ProgressValue: 66,
+          ProgressColor: 'yellow',
+          ProgressFontColor: 'white',
+        },
+        {
+          ProgressValue: component.MaxValue,
+          ProgressColor: 'red',
+          ProgressFontColor: 'white',
+        },
       ];
       component.UseCustomZones = true;
       component.CustomZones = CustomZones;
@@ -144,9 +235,21 @@ describe('ProgressBarComponent', () => {
     });
     it('_ZonesInUse should use the DefaultZones when UseDefaultZones is set to true', () => {
       const DefaultZones = [
-        { value: 33, color: 'green' },
-        { value: 66, color: 'yellow' },
-        { value: component.MaxValue, color: 'red' },
+        {
+          ProgressValue: 33,
+          ProgressColor: 'green',
+          ProgressFontColor: 'black',
+        },
+        {
+          ProgressValue: 66,
+          ProgressColor: 'yellow',
+          ProgressFontColor: 'black',
+        },
+        {
+          ProgressValue: component.MaxValue,
+          ProgressColor: 'red',
+          ProgressFontColor: 'white',
+        },
       ];
       component.UseDefaultZones = true;
       component.ngOnInit();
