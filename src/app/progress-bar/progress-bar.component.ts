@@ -9,7 +9,7 @@ import { RSTPBarZone } from './interface_progress-bar';
 export class ProgressBarComponent implements OnInit {
   _Value = 0;
   _StandardMaxValue = true;
-  _StandardProgressBarColor = 'lightblue';
+  _StandardProgressBarColor = 'green';
   _StandardProgressBarFontColor = 'white';
   _ProgressWidth = 0;
   _CurrentProgressBarColor = this._StandardProgressBarColor;
@@ -29,6 +29,8 @@ export class ProgressBarComponent implements OnInit {
     }
   }
   @Input() MaxValue = 100;
+  @Input() UseStripedProgressBar = false;
+  @Input() UseStripedAnimation = false;
   @Input() UseDefaultZones = false;
   @Input() UseCustomZones = false;
   @Input() CustomZones;
@@ -60,6 +62,9 @@ export class ProgressBarComponent implements OnInit {
     this.setProgressBarWidth(Value);
     if (this.UseCustomZones || this.UseDefaultZones) {
       this.setColor(Value);
+    }
+    if (this.UseStripedAnimation && !this.UseStripedProgressBar) {
+      this.UseStripedAnimation = false;
     }
   }
 
