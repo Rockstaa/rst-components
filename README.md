@@ -13,8 +13,8 @@ The project is build with Angular-CLI 6.0.0
 You can run the implemented test with the Karma Test Runner
 
 
-#Progress Bar
-###How to use it
+# Progress Bar
+### How to use it
 You can implement it in any component you like, but keep it in a shared module to have more than one instance of this component.
 
 The only necessary Variable of this component is the [Value] Input Variable.
@@ -23,22 +23,22 @@ The only necessary Variable of this component is the [Value] Input Variable.
 <app-progress-bar [Value]="MyValue"></app-progress-bar>
 <app-progress-bar [Value]="MyObject.Value"></app-progress-bar>
 ```
-###Input Variables
-####Name
+### Input Variables
+#### Name
 You can give the Progress Bar a specific name you want to set the html name attribute
-####Value
+#### Value
 Value of the Progress Bar
-####MaxValue
+#### MaxValue
 You can set the maximal value of the progress to any value you want to. For example 1000 then the progress bar will have a range between 0 and 1000 %. The initial Value is 100.
-###ProgressBarColor
+### ProgressBarColor
 You can set your own progress bar color for example 'blue' or any valid hexcode like '#ededed'.
-###ProgressBarFontColor
+### ProgressBarFontColor
 You can set your own font color for the progress bar for example 'white' or any valid hexcode like '#1def8a'
-####UseStripedProgressbar
+#### UseStripedProgressbar
 When set to true, the progress bar will have a striped background, the initial Value is false.
-####UseStripedAnimation
+#### UseStripedAnimation
 When set to true, the progress bar is animated the whole time, initial Value is false.
-####UseDefaultZones
+#### UseDefaultZones
 You can use zones to mark ranges within your maximal value. When you set the value to true the zones will be used, standard value is false. The default zones are specified in the following way:
 
 ```javascript
