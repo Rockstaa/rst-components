@@ -64,7 +64,7 @@ You can use zones to mark ranges within your maximal value. When you set the val
 - From the value range 33 to 66 the progress bar will be green and will have a black font color
 - From the value range 66 to MaxValue (Standard is 100) the progres bar will be red and will have a white font color
 
-###UseCustomZones
+### UseCustomZones
 
 You can create your own custom zones which can created with the help of the RSTPBarZone interface, when you set the value to true your custom zones will be used, but keep in mind that you have to pass one in.
 
