@@ -6,9 +6,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  TESTValue = 0;
+  TESTValue = 50;
+  MyZones = [
+    { value: 50, color: 'yellow' },
+    { value: 90, color: 'blue' },
+  ];
 
   changeValue() {
-    this.TESTValue = Math.floor(Math.random() * 900);
+    this.TESTValue = Math.floor(Math.random() * 100);
   }
 }
