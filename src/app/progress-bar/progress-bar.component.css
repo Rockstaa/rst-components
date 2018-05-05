@@ -1,28 +1,48 @@
 .rst-progressBar {
   width: 100%;
-  height:20px;
+  height: 20px;
   position: relative;
   text-align: center;
   border-radius: 3px;
   background-color: #e6e9ed;
 }
 
-.rst-progressBar__progress{
-  position:absolute;
-  height:100%;
-  left:0;
+.rst-progressBar__progress {
+  position: absolute;
+  height: 100%;
+  left: 0;
   border-radius: 3px;
-  -webkit-transition : width 0.75s ease;
-  -moz-transition : width 0.75s ease;
-  -o-transition : width 0.75s ease;
-  transition : width 0.75s ease;
+  -webkit-transition: width 0.75s ease;
+  -moz-transition: width 0.75s ease;
+  -o-transition: width 0.75s ease;
+  transition: width 0.75s ease;
 }
 
 .rst-progressBar__value {
-  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   position: relative;
-  font-size:14px;
+  font-size: 14px;
 }
 
+.rst-progressBar__striped {
+  background-image: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.15) 25%,
+    transparent 25%,
+    transparent 50%,
+    rgba(255, 255, 255, 0.15) 50%,
+    rgba(255, 255, 255, 0.15) 75%,
+    transparent 75%,
+    transparent
+  );
+  background-size: 1rem 1rem;
+}
 
+.rst-progressBar__animated {
+  -webkit-animation: rst-progressBar-stripes 2.5s linear infinite;
+  animation: rst-progressBar-stripes 2.5s linear infinite;
+}
 
+@keyframes rst-progressBar-stripes {
+  0% {background-position: 0 0;} 100% {background-position: 60px 0;}
+}
